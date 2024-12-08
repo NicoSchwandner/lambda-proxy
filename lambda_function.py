@@ -19,6 +19,7 @@ def call_secondary_lambda(function_name: str, payload: dict):
         InvocationType='Event',
         Payload=json.dumps(payload)
     )
+    print('Secondary lambda called!')
 
 def lambda_handler(event, context):
     # Parse the incoming Slack request
