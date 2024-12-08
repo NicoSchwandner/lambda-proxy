@@ -3,6 +3,10 @@ import json
 from urllib.parse import parse_qs
 from config import LUNCH_MENU_FETCHER_NAME
 
+print('Creating Lambda client...')
+lambda_client = boto3.client('lambda')
+print('Lambda client created!')
+
 def determine_lambda_name(path_segments: list[str]) -> str:
     if len(path_segments) >= 1:
         resource = path_segments[0]
@@ -11,9 +15,6 @@ def determine_lambda_name(path_segments: list[str]) -> str:
     return ''
 
 def call_secondary_lambda(function_name: str, payload: dict):
-    print('Creating Lambda client...')
-    lambda_client = boto3.client('lambda')
-    print('Lambda client created!')
 
     print(f'Calling secondary lambda: {function_name}')
     lambda_client.invoke(
