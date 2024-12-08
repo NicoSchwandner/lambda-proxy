@@ -15,7 +15,6 @@ def call_secondary_lambda(function_name: str, payload: dict):
     print(f'Calling secondary lambda: {function_name}')
     lambda_client.invoke(
         FunctionName=function_name,
-        LogType='Tail',
         InvocationType='Event',
         Payload=json.dumps(payload)
     )
