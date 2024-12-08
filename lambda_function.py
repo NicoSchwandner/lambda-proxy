@@ -31,6 +31,8 @@ def lambda_handler(event, context):
     lambda_payload = {}
     lambda_payload['response_url'] = response_url
 
+    print(f'Lambda payload: {lambda_payload}')
+
     if len(path_segments) >= 1:
         resource = path_segments[0]
         if resource == 'lunch':
