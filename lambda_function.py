@@ -11,7 +11,9 @@ def determine_lambda_name(path_segments: list[str]) -> str:
     return ''
 
 def call_secondary_lambda(function_name: str, payload: dict):
+    print('Creating Lambda client...')
     lambda_client = boto3.client('lambda')
+    print('Lambda client created!')
 
     print(f'Calling secondary lambda: {function_name}')
     lambda_client.invoke(
