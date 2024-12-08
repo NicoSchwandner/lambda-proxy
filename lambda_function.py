@@ -1,12 +1,8 @@
 def lambda_handler(event, context):
-    # Extract the raw path
-    raw_path = event.get('rawPath', '')
+    proxy_path = event.get('pathParameters', {}).get('proxy', '')
 
-    # Alternatively, using requestContext
-    # raw_path = event.get('requestContext', {}).get('http', {}).get('path', '')
-
-    # Remove leading slash and split
-    path_segments = raw_path.lstrip('/').split('/')
+    # Split the path into segments
+    path_segments = proxy_path.split('/')
 
     status_code = 200
     body = 'Loading...'
@@ -19,12 +15,12 @@ def lambda_handler(event, context):
             pass
         else:
             status_code = 200 # not using 404 to be able to display the message in Slack
-            body = f'Resource not found at {raw_path}'
+            body = f'Resource not found at {proxy_path}'
     else:
         status_code = 200 # not using 404 to be able to display the message in Slack
-        body = f'Resource not found at {raw_path}'
+        body = f'Resource not found at {proxy_path}'
 
-    print(f'Raw path: {raw_path}')
+    print(f'Raw path: {proxy_path}')
     print(f'Status code: {status_code}')
     print(f'Body: {body}')
 
