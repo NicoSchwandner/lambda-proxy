@@ -4,7 +4,7 @@ This Lambda function acts as a proxy for Slack slash commands that require async
 
 - Slack sends the slash command payload to this Lambda via an API Gateway `/proxy/*` route.
 - This Lambda responds quickly (within Slack’s 3-second timeout) with a "Loading..." or similar message.
-- Meanwhile, it triggers a secondary Lambda function that handles the long-running process (e.g., fetching a lunch menu).
+- Meanwhile, it triggers a secondary Lambda function that handles the long-running process (e.g., fetching a lunch menu - [lunch-menu-fetcher](https://github.com/NicoSchwandner/lunch-menu-fetcher)).
 - Once the secondary Lambda finishes, it can send the results directly back to Slack using the `response_url` provided in the initial request.
 
 ## Why This Matters
