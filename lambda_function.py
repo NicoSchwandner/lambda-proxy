@@ -44,7 +44,7 @@ def call_secondary_lambda(function_name: str, payload: dict):
         Payload=json.dumps(payload)
     )
 
-def parse_body(event: dict) -> tuple[str, str]:
+def parse_body(event: dict) -> tuple[str, str, str]:
     body_str = event.get('body', '')
     if event.get('isBase64Encoded'):
         body_str = base64.b64decode(body_str).decode('utf-8')
@@ -52,18 +52,20 @@ def parse_body(event: dict) -> tuple[str, str]:
     parsed_body = parse_qs(body_str)
     proxy_path = event.get('pathParameters', {}).get('proxy', '')
     response_url = parsed_body.get('response_url', [None])[0]
+    text = parsed_body.get('text', [''])[0]
 
-    return proxy_path, response_url
+    return proxy_path, response_url, text
 
 def lambda_handler(event, context):
     logger.info("Starting lambda handler with event: %s", event)
-    proxy_path, response_url = parse_body(event)
+    proxy_path, response_url, text = parse_body(event)
     path_segments = proxy_path.split('/')
     logger.info("Parsed proxy path: %s", proxy_path)
 
     response = Response()
     lambda_payload = {
-        'response_url': response_url
+        'response_url': response_url,
+        'text': text
     }
     logger.debug("Lambda payload: %s", lambda_payload)
 
